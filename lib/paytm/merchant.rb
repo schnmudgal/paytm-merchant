@@ -4,9 +4,12 @@ require 'httparty'
 
 module PayTM
   module Merchant
-    include EncryptionNewPG
-    include HTTParty
-    extend EncryptionNewPG
+
+    def self.included(base)
+      base.send :include, HTTParty
+      base.extend EncryptionNewPG
+      base.extend ClassMethods
+    end
 
     # Class Variables
     @@base_uri = nil
@@ -25,19 +28,19 @@ module PayTM
     attr_accessor :amount, :recipient, :phone, :email, :metadata
 
     # Class Methods
-    class << self
+    module ClassMethods
 
       def base_uri=(value)
-        @@base_uri = value
+        @base_uri = value
       end
       def merchant_guid=(value)
-        @@merchant_guid = value
+        @merchant_guid = value
       end
       def aes_key=(value)
-        @@aes_key = value
+        @aes_key = value
       end
       def sales_wallet_id=(value)
-        @@sales_wallet_id = value
+        @sales_wallet_id = value
       end
 
       def config(&block)
@@ -47,7 +50,7 @@ module PayTM
 
       # Base URI for HTTParty requests
       def set_httparty_base_uri
-        base_uri(@@base_uri || Staging_Base_Uri)
+        base_uri(@base_uri || Staging_Base_Uri)
       end
 
       def check_transaction_status_for(transaction_id, options = {})
