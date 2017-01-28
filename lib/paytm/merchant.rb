@@ -11,12 +11,6 @@ module PayTM
       base.extend ClassMethods
     end
 
-    # Class Variables
-    @@base_uri = nil
-    @@merchant_guid = nil
-    @@aes_key = nil
-    @@sales_wallet_id = nil
-
     # Constants
     Staging_Base_Uri = 'http://trust-uat.paytm.in'
     End_Points = {
@@ -29,19 +23,8 @@ module PayTM
 
     # Class Methods
     module ClassMethods
-
-      def base_uri=(value)
-        @base_uri = value
-      end
-      def merchant_guid=(value)
-        @merchant_guid = value
-      end
-      def aes_key=(value)
-        @aes_key = value
-      end
-      def sales_wallet_id=(value)
-        @sales_wallet_id = value
-      end
+      # Class attr_accessors
+      attr_accessor :api_base_uri, :merchant_guid, :aes_key, :sales_wallet_id
 
       def config(&block)
         instance_eval(&block)
@@ -50,7 +33,7 @@ module PayTM
 
       # Base URI for HTTParty requests
       def set_httparty_base_uri
-        base_uri(@base_uri || Staging_Base_Uri)
+        base_uri(api_base_uri || PayTM::Merchant::Staging_Base_Uri)
       end
 
       def check_transaction_status_for(transaction_id, options = {})
@@ -109,7 +92,7 @@ module PayTM
           requestType: request_type,
           txnType: transaction_type,
           txnId: transaction_id,
-          merchantGuid: @@merchant_guid
+          merchantGuid: self.class.merchant_guid
         },
         platformName: 'PayTM',
         operationType: 'CHECK_TXN_STATUS'
@@ -124,10 +107,10 @@ module PayTM
       {
         request: {
           requestType: options[:request_type],
-          merchantGuid: @@merchant_guid,
-          merchantOrderId: options[:merchant_order_id] || "#{ @phone }-#{ Time.current.to_i }",
+          merchantGuid: self.class.merchant_guid,
+          merchantOrderId: options[:merchant_order_id] || "#{ @phone }-#{ Time.now.to_i }",
           salesWalletName: options[:sales_wallet_name],
-          salesWalletGuid: @@sales_wallet_id,
+          salesWalletGuid: self.class.sales_wallet_id,
           payeeEmailId: @email,
           payeePhoneNumber: @phone,
           payeeSsoId: options[:payee_sso_id] || '',
@@ -146,8 +129,8 @@ module PayTM
       {
         'Content-Type' => 'application/json',
         'Accept' => 'application/json',
-        'mid' => @@merchant_guid,
-        'checksumhash' => generate_hash(@@aes_key, request_body)
+        'mid' => self.class.merchant_guid,
+        'checksumhash' => generate_hash(self.class.aes_key, request_body)
       }
     end
 

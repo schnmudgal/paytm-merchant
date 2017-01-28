@@ -1,6 +1,6 @@
 InitializerContent = "# Paytm initializer to setup with configurations
 Paytm.config do |paytm|
-  # paytm.base_uri = 'Some Base URI' # Default is staging api URI fpr paytm
+  # paytm.api_base_uri = 'Some Base URI' # Default is staging api URI fpr paytm
   paytm.merchant_guid = 'Paytm Merchant Guid'
   paytm.aes_key = 'Paytm AES Key'
   paytm.sales_wallet_id = 'Paytm Sales Wallet Id'
