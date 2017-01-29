@@ -1,4 +1,4 @@
-# Paytm Merchant
+# Paytm Merchant [![Gem Version](https://badge.fury.io/rb/paytm-merchant.svg)](https://badge.fury.io/rb/paytm-merchant)
 
 This is a ruby library(and not just rails gem) for PayTM Merchant transactions API. You can easily integrate you application to pay your users/winners by calling `Paytm.new({amount: 110, phone: '7777777777'}).transfer`
 
