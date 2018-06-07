@@ -1,4 +1,4 @@
-require "paytm/merchant/version"
+require 'paytm/merchant/version'
 require 'paytm/merchant/encryption_new_p_g'
 require 'httparty'
 

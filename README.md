@@ -23,6 +23,8 @@ Or install it yourself as:
 To setup, first initialize the library with credentials.
 
 ```ruby
+require 'paytm/merchant'
+
 Paytm.config do |paytm|
   # paytm.api_base_uri = 'Some Base URI' # Default is staging api URI fpr paytm
   paytm.merchant_guid = 'Paytm Merchant Guid'
