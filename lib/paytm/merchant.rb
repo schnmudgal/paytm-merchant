@@ -135,7 +135,7 @@ module PayTM
     end
 
     def generate_hash(key, params={})
-      @checksum = Paytm.new_pg_checksum_by_str(params.to_json, key).gsub("\n",'')
+      @checksum = Paytm.new_pg_checksum_by_String(params.to_json, key).gsub("\n",'')
     end
   end
 end
