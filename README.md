@@ -45,7 +45,7 @@ Create paytm object of `Paytm` class.
 ```ruby
 paytm_obj = Paytm.new(
   amount: 120,
-  recipient: User.last,
+  recipient: 'some user',
   phone: '7777777777',
   email: 'user@example.com'
 )
@@ -68,7 +68,8 @@ paytm_obj.transfer(
   amount:                150,
   currency_code:        'INR'                             # Currency code specified by Paytm. Default 'INR'
   metadata:             'Test Transaction',               # Extra details to be sent for transaction
-  ip_address:            '127.0.0.1',                      # As you want
+  ip_address:           '127.0.0.1',                      # As you want
+  verify:               true                              # true or false for SSL verification by OpenSSL for request
 )
 ```
 

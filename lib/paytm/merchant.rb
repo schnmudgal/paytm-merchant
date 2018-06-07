@@ -12,7 +12,7 @@ module PayTM
     end
 
     # Constants
-    Staging_Base_Uri = 'http://trust-uat.paytm.in'
+    Staging_Base_Uri = 'https://trust-uat.paytm.in'
     End_Points = {
       salestouser: '/wallet-web/salesToUserCredit',
       checkstatus: '/wallet-web/checkStatus'
@@ -58,7 +58,7 @@ module PayTM
         {
           body: paytm_request_body(options).to_json,
           headers: paytm_request_headers,
-          verify: options[:verify]
+          verify: (options[:verify] == false ? false : true)
         }
       )
     end
@@ -70,7 +70,7 @@ module PayTM
         {
           body: check_transaction_body.to_json,
           headers: paytm_check_transation_status_header(check_transaction_body),
-          verify: options[:verify]
+          verify: (options[:verify] == false ? false : true)
         }
       )
     end
