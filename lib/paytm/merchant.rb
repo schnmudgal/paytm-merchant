@@ -55,7 +55,11 @@ module PayTM
 
       @response = self.class.post(
         End_Points[:salestouser],
-        { body: paytm_request_body(options).to_json, headers: paytm_request_headers }
+        {
+          body: paytm_request_body(options).to_json,
+          headers: paytm_request_headers,
+          verify: options[:verify]
+        }
       )
     end
 
@@ -65,7 +69,8 @@ module PayTM
         End_Points[:checkstatus],
         {
           body: check_transaction_body.to_json,
-          headers: paytm_check_transation_status_header(check_transaction_body)
+          headers: paytm_check_transation_status_header(check_transaction_body),
+          verify: options[:verify]
         }
       )
     end
