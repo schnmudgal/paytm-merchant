@@ -33,7 +33,7 @@ Paytm.config do |paytm|
 end
 ```
 
-For Rails:
+#### For Rails
 
     $ rails generate paytm_setup
 
